@@ -2,9 +2,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Search,
-  BookOpen,
-  GraduationCap,
-  Users,
   ArrowRight,
   Code,
   Cpu,
@@ -20,7 +17,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <div className="relative pt-16 overflow-hidden bg-background md:pt-24">
+    <div className="relative pt-16 pb-5 overflow-hidden bg-background md:pt-24">
       {/* Advanced Gradient Background */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5" />
       <div className="absolute inset-0 bg-gradient-to-br from-blue-600/30 via-blue-400/20 to-transparent" />

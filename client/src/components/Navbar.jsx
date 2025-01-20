@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,6 +34,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import DarkMode from "@/pages/DarkMode";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,14 +45,6 @@ const Navbar = () => {
   const navItems = [
     { title: "Home", href: "/" },
     { title: "About", href: "/about" },
-    // {
-    //   title: "Services",
-    //   subItems: [
-    //     { title: "Consulting", href: "/services/consulting" },
-    //     { title: "Development", href: "/services/development" },
-    //     { title: "Design", href: "/services/design" },
-    //   ],
-    // },
     { title: "Contact", href: "/contact" },
   ];
 
@@ -62,18 +53,24 @@ const Navbar = () => {
   };
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container px-4 mx-auto">
+    <header className="relative overflow-hidden border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/30 via-blue-400/20 to-transparent" />
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-b from-blue-500/20 to-transparent blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-t from-indigo-500/20 to-transparent blur-3xl" />
+
+      <div className="container relative px-4 mx-auto">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="p-1 rounded-lg bg-primary">
-              <span className="text-xl font-bold text-primary-foreground">
+            <div className="p-1 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600">
+              <span className="text-xl font-bold text-white">
                 <School size={"30"} />
               </span>
             </div>
-            <span className="p-1 text-xl font-semibold uppercase">
-              Engineers Hub
+            <span className="p-1 text-xl font-semibold text-transparent uppercase bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text">
+              <Link to="/">Engineers Hub</Link>
             </span>
           </div>
 
@@ -85,57 +82,18 @@ const Navbar = () => {
                   <NavigationMenuList>
                     {navItems.map((item) => (
                       <NavigationMenuItem key={item.title}>
-                        {item.subItems ? (
-                          <>
-                            <NavigationMenuTrigger className="px-4 h-9">
-                              {item.title}
-                            </NavigationMenuTrigger>
-                            <NavigationMenuContent>
-                              <ul className="grid w-48 gap-3 p-4 md:w-[200px]">
-                                {item.subItems.map((subItem) => (
-                                  <li key={subItem.title}>
-                                    <NavigationMenuLink asChild>
-                                      <a
-                                        href={subItem.href}
-                                        className="block p-3 space-y-1 leading-none no-underline transition-colors rounded-md outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                                      >
-                                        <div className="text-sm font-medium">
-                                          {subItem.title}
-                                        </div>
-                                      </a>
-                                    </NavigationMenuLink>
-                                  </li>
-                                ))}
-                              </ul>
-                            </NavigationMenuContent>
-                          </>
-                        ) : (
-                          <NavigationMenuLink asChild>
-                            <a
-                              href={item.href}
-                              className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                            >
-                              {item.title}
-                            </a>
-                          </NavigationMenuLink>
-                        )}
+                        <NavigationMenuLink asChild>
+                          <a
+                            href={item.href}
+                            className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors rounded-md group h-9 w-max bg-background hover:bg-blue-600/10 hover:text-blue-600 focus:bg-blue-600/10 focus:text-blue-600"
+                          >
+                            {item.title}
+                          </a>
+                        </NavigationMenuLink>
                       </NavigationMenuItem>
                     ))}
                   </NavigationMenuList>
                 </NavigationMenu>
-
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={toggleTheme}
-                  className="mr-2"
-                >
-                  {theme === "light" ? (
-                    <Moon className="w-5 h-5" />
-                  ) : (
-                    <Sun className="w-5 h-5" />
-                  )}
-                </Button>
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -163,7 +121,15 @@ const Navbar = () => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
                       <User className="w-4 h-4 mr-2" />
-                      <span>Profile</span>
+                      <Link to="profile">
+                        <span>Profile</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <User className="w-4 h-4 mr-2" />
+                      <span>
+                        <Link to="my-learning">My Learning</Link>
+                      </span>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                       <DollarSign className="w-4 h-4 mr-2" />
@@ -183,10 +149,15 @@ const Navbar = () => {
               </>
             ) : (
               <div className="flex items-center space-x-2">
-                <Button variant="outline" className="">
+                <Button
+                  variant="outline"
+                  className="text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                >
                   Login
                 </Button>
-                <Button>Sign Up</Button>
+                <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                  Sign Up
+                </Button>
               </div>
             )}
             <DarkMode />
@@ -253,47 +224,29 @@ const Navbar = () => {
                 <nav className="flex flex-col mt-6 space-y-4">
                   {navItems.map((item) => (
                     <React.Fragment key={item.title}>
-                      {item.subItems ? (
-                        <div className="space-y-3">
-                          <div className="text-lg font-medium">
-                            {item.title}
-                          </div>
-                          <div className="pl-4 space-y-2">
-                            {item.subItems.map((subItem) => (
-                              <a
-                                key={subItem.title}
-                                href={subItem.href}
-                                className="block text-sm transition-colors text-muted-foreground hover:text-primary"
-                                onClick={() => setIsOpen(false)}
-                              >
-                                {subItem.title}
-                              </a>
-                            ))}
-                          </div>
-                          
-                        </div>
-                      ) : (
-                        <a
-                          href={item.href}
-                          className="block text-lg font-medium transition-colors hover:text-primary"
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {item.title}
-                        </a>
-                      )}
-                     
+                      <a
+                        href={item.href}
+                        className="block text-lg font-medium transition-colors hover:text-blue-600"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {item.title}
+                      </a>
                     </React.Fragment>
-                    
                   ))}
-                   {role === "instructor" && (
-                            <div className="pl-4 space-y-2">
-                              <SheetFooter>
-                                <SheetClose asChild>
-                                  <Button type="submit">Dashboard</Button>
-                                </SheetClose>
-                              </SheetFooter>
-                            </div>
-                          )}
+                  {role === "instructor" && (
+                    <div className="pl-4 space-y-2">
+                      <SheetFooter>
+                        <SheetClose asChild>
+                          <Button
+                            type="submit"
+                            className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+                          >
+                            Dashboard
+                          </Button>
+                        </SheetClose>
+                      </SheetFooter>
+                    </div>
+                  )}
                 </nav>
               </SheetContent>
             </Sheet>

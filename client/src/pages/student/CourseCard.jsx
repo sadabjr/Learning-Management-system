@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -28,8 +27,10 @@ const CourseCard = () => {
 
         {/* Duration and Level */}
         <div className="flex justify-between mb-4 text-sm text-blue-600/80 dark:text-blue-400/80">
-          <span>12 Weeks</span>
-          <span>Advanced</span>
+          <span className="font-bold text-[1.5rem]">$999</span>
+          <span className="px-2 py-1 text-xs text-white bg-green-600 rounded-full">
+            Advanced
+          </span>
         </div>
 
         {/* Button with Animation */}
@@ -38,8 +39,9 @@ const CourseCard = () => {
           size="lg"
           onClick={() => console.log("Start Learning clicked")}
         >
-          Start Learning
+          Buy Now 
           <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+          {/* <TicketCheck /> */}
         </Button>
       </CardContent>
     </Card>
